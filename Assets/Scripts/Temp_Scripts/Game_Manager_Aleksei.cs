@@ -27,14 +27,22 @@ public class Game_Manager_Aleksei : MonoBehaviour {
     private IEnumerator coroutine;
     private bool SpawningStudent = true;
 	// Use this for initialization
+
+	public float Time_Left;
+
 	void Start () {
         InitValidLetters();
         StartCoroutine(SpawnStudent());
+		Time_Left = 10f;
     }
 	
 	// Update is called once per frame
 	void Update () {
-        
+		Time_Left -= Time.deltaTime;
+		//Debug.Log (Time_Left);
+		if (Time_Left <= 0) {
+			Debug.Log ("No more time left");
+		}
 	}
 
     //Coroutine for spawning students and all relevant operations.
