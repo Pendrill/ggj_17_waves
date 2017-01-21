@@ -42,11 +42,11 @@ public class Move_Student : MonoBehaviour
         //Move the student according to the moveDirection enum.
         if (moveDirection == Direction.Left)
         {
-            transform.position += new Vector3(Student_Speed, 0, 0) * Time.deltaTime;
+            transform.position += new Vector3(-Student_Speed, 0, 0) * Time.deltaTime;
         }
         else if (moveDirection == Direction.Right)
         {
-            transform.position += new Vector3(-Student_Speed, 0, 0) * Time.deltaTime;
+            transform.position += new Vector3(Student_Speed, 0, 0) * Time.deltaTime;
         }
 
     }
@@ -78,7 +78,7 @@ public class Move_Student : MonoBehaviour
         //checks which wave area the student has collided with
         if (wave.tag == "Player1")
         {
-            transform.FindChild("Letter").GetComponent<TextMesh>().color = Color.red;
+            transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<TextMesh>().color = Color.red;
             //Debug.Log ("Collided with p1");
             //checks that the right key is being pressed
             if (Input.GetKeyDown(Student_Letter))
@@ -91,7 +91,7 @@ public class Move_Student : MonoBehaviour
         }
         else if (wave.tag == "Player2")
         {
-            transform.FindChild("Letter").GetComponent<TextMesh>().color = Color.blue;
+            transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<TextMesh>().color = Color.blue;
             if (Input.GetKeyDown(Student_Letter))
             {
                 //Debug.Log ("The correct key is getting pressed");
@@ -115,6 +115,7 @@ public class Move_Student : MonoBehaviour
             {
                 //Debug.Log ("The correct key is getting pressed");
                 increase_Score(1, 1);
+                transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<Display_Letter>().ShakeLetter();
             }
         }
         else if (wave.tag == "Player2")
@@ -123,6 +124,7 @@ public class Move_Student : MonoBehaviour
             {
                 //Debug.Log ("The correct key is getting pressed");
                 increase_Score(1, 2);
+                transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<Display_Letter>().ShakeLetter();
             }
         }
         
@@ -152,7 +154,7 @@ public class Move_Student : MonoBehaviour
             //Debug.Log ("This is the score for P1: " + p1_score);
            
         }
-        transform.FindChild("Letter").GetComponent<TextMesh>().color = Color.black; 
+        transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<TextMesh>().color = Color.black; 
     }
 
 	void OnCollisionEnter2D(Collision2D student){

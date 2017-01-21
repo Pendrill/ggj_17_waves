@@ -26,6 +26,9 @@ public class Game_Manager_Aleksei : MonoBehaviour {
     //Coroutine to spawn students
     private IEnumerator coroutine;
     private bool SpawningStudent = true;
+
+    int leftOrRight = 1;
+
 	// Use this for initialization
 
 	public float Time_Left;
@@ -59,16 +62,19 @@ public class Game_Manager_Aleksei : MonoBehaviour {
             if(ValidLetters.Count > 0)
             {
                 //Pick left or right side to spawn.
-                int leftOrRight = Random.Range(0, 2);
+                leftOrRight = -leftOrRight;
                 Vector3 SpawnPosition;
+                Move_Student.Direction direction;
                 //Set the SpawnPosition to left or right.
-                if (leftOrRight == 0)
+                if (leftOrRight == -1)
                 {
                     SpawnPosition = leftPosition;
+                    direction = Move_Student.Direction.Right;
                 }
                 else
                 {
                     SpawnPosition = rightPosition;
+                    direction = Move_Student.Direction.Left;
                 }
 
                 //Pick one of the valid heights and add to the y of SpawnPosition
@@ -81,7 +87,7 @@ public class Game_Manager_Aleksei : MonoBehaviour {
                 GameObject temp = Instantiate(Students[index], SpawnPosition, Quaternion.identity);
 
                 //Set the move direction on the spawned student to the correct one.
-                temp.GetComponent<Move_Student>().moveDirection = (Move_Student.Direction)leftOrRight;
+                temp.GetComponent<Move_Student>().moveDirection = direction;
                 temp.GetComponent<Move_Student>().Student_Letter = GetRandomLetter();
             }
             yield return new WaitForSeconds(waitTime);
