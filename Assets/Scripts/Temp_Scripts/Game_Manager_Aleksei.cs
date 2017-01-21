@@ -16,6 +16,9 @@ public class Game_Manager_Aleksei : MonoBehaviour {
     //Time between each student spawn
     public float waitTime = 2.0f;
 
+    //Min and Max Y Values
+    public float minY, maxY;
+
     //The two x possible spawn positions.
     private Vector3 leftPosition = new Vector3(-10, 0, 0);
     private Vector3 rightPosition = new Vector3(10, 0, 0);
@@ -57,7 +60,7 @@ public class Game_Manager_Aleksei : MonoBehaviour {
                 //Pick one of the valid heights and add to the y of SpawnPosition
                 /*int randomYValue = Random.Range(0, ValidYPositions.Count);
                 SpawnPosition.y += ValidYPositions[randomYValue];*/
-                SpawnPosition.y = Random.Range(-4f, 2f);
+                SpawnPosition.y = Random.Range(minY, maxY);
 
                 //Pick a random student model and spawn at position.
                 int index = Random.Range(0, Students.Count);
