@@ -3,15 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Game_Manager_Aleksei : MonoBehaviour {
+
 	public int Player1_Score;
 	public int Player2_Score;
+    //List of valid Letters.
     public List<string> ValidLetters;
+    //List of GameObject students.
     public List<GameObject> Students;
+    //List of Valid Y Positions.
     public List<float> ValidYPositions;
 
+    //The two x possible spawn positions.
     private Vector3 leftPosition = new Vector3(-10, 0, 0);
     private Vector3 rightPosition = new Vector3(10, 0, 0);
 
+    //Coroutine to spawn students
     private IEnumerator coroutine;
     private bool SpawningStudent = true;
 	// Use this for initialization
@@ -25,6 +31,7 @@ public class Game_Manager_Aleksei : MonoBehaviour {
         
 	}
 
+    //Coroutine for spawning students and all relevant operations.
     private IEnumerator SpawnStudent()
     {
         while (SpawningStudent)
@@ -33,6 +40,7 @@ public class Game_Manager_Aleksei : MonoBehaviour {
             //Pick left or right side to spawn.
             int leftOrRight = Random.Range(0, 2);
             Vector3 SpawnPosition;
+            //Set the SpawnPosition to left or right.
             if (leftOrRight == 0)
             {
                 SpawnPosition = leftPosition;
@@ -58,6 +66,7 @@ public class Game_Manager_Aleksei : MonoBehaviour {
        
     }
 
+    //Returns a random letter from the List, and removes it from the List so we won't have duplicates.
     string GetRandomLetter()
     {
         int index = Random.Range(0, ValidLetters.Count);
@@ -66,11 +75,13 @@ public class Game_Manager_Aleksei : MonoBehaviour {
         return letter;
     }
 
+    //Puts the given letter back into the list.
     void ReturnLetter(string letter)
     {
         ValidLetters.Add(letter);
     }
 
+    //Just inits the list.
     void InitValidLetters()
     {
         string[] array = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
