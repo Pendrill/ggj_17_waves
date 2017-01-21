@@ -11,7 +11,7 @@ public class Game_Manager_Aleksei : MonoBehaviour {
     //List of GameObject students.
     public List<GameObject> Students;
     //List of Valid Y Positions.
-    public List<float> ValidYPositions;
+    //public List<float> ValidYPositions;
 
     //The two x possible spawn positions.
     private Vector3 leftPosition = new Vector3(-10, 0, 0);
@@ -51,8 +51,9 @@ public class Game_Manager_Aleksei : MonoBehaviour {
             }
 
             //Pick one of the valid heights and add to the y of SpawnPosition
-            int randomYValue = Random.Range(0, ValidYPositions.Count);
-            SpawnPosition.y += ValidYPositions[randomYValue];
+            /*int randomYValue = Random.Range(0, ValidYPositions.Count);
+            SpawnPosition.y += ValidYPositions[randomYValue];*/
+            SpawnPosition.y = Random.Range(-4f, 2f);
 
             //Pick a random student model and spawn at position.
             int index = Random.Range(0, Students.Count);
@@ -76,7 +77,7 @@ public class Game_Manager_Aleksei : MonoBehaviour {
     }
 
     //Puts the given letter back into the list.
-    void ReturnLetter(string letter)
+    public void ReturnLetter(string letter)
     {
         ValidLetters.Add(letter);
     }

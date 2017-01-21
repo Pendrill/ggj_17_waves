@@ -19,10 +19,12 @@ public class Move_Student : MonoBehaviour
     public enum Direction { Left, Right };
     //The movement direction for this particular student.
     public Direction moveDirection;
+    Game_Manager_Aleksei gameManager;
 
     // Use this for initialization
     void Start()
     {
+        gameManager = GameObject.Find("GameManager").GetComponent<Game_Manager_Aleksei>();
         //Set the exit counter to 0 as they have not passed any wave area yet
         Exit_Counter = 0;
         //Get the rigid body of the student
@@ -34,7 +36,6 @@ public class Move_Student : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         //Student_RigidBody.AddForce (-transform.right * Student_Speed * Time.deltaTime);
         //Move the student according to the moveDirection enum.
         if (moveDirection == Direction.Left)
@@ -93,6 +94,11 @@ public class Move_Student : MonoBehaviour
                 increase_Score(1, 2);
             }
         }
+        else if (wave.tag == "DeathBox")
+        {
+            Debug.Log("Deathbox");
+            Destroy(gameObject);
+        }
 
     }
     //The same thing is done here but rather then being when the student initially collides with the wave area
@@ -141,6 +147,12 @@ public class Move_Student : MonoBehaviour
             }
             //Debug.Log ("This is the score for P1: " + p1_score);
         }
+    }
+
+    void OnDestroy()
+    {
+        gameManager.ReturnLetter(Student_Letter);
+        Destroy(gameObject);
     }
 
 }
