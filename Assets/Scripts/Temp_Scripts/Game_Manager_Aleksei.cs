@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Game_Manager_Aleksei : MonoBehaviour {
 
@@ -29,6 +30,8 @@ public class Game_Manager_Aleksei : MonoBehaviour {
 
     int leftOrRight = 1;
 
+    public Text playerOneScoreText, playerTwoScoreText;
+
 	// Use this for initialization
 
 	public float Time_Left;
@@ -52,6 +55,8 @@ public class Game_Manager_Aleksei : MonoBehaviour {
 			Debug.Log ("No more time left");
 		}
         UpdateClockRotation();
+        playerOneScoreText.text = Player1_Score.ToString();
+        playerTwoScoreText.text = Player2_Score.ToString();
 	}
 
     //Coroutine for spawning students and all relevant operations.
@@ -132,5 +137,17 @@ public class Game_Manager_Aleksei : MonoBehaviour {
     {
         GameObject minuteHand = GameObject.Find("minute_hand");
         minuteHand.transform.rotation = Quaternion.Euler(0, 0, GetRotation());
+    }
+
+    public void IncreasePlayerScore(int player, int scoreValue)
+    {
+        if(player == 1)
+        {
+            Player1_Score += scoreValue;
+        }
+        else if(player == 2)
+        {
+            Player2_Score += scoreValue;
+        }
     }
 }

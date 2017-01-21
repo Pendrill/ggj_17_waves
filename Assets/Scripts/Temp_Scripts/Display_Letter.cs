@@ -38,14 +38,11 @@ public class Display_Letter : MonoBehaviour {
 
         //Saving original position
         originalPosition = transform.localPosition;
-	}
+        student_letter.text = display_Letter;
+    }
 	
 	// Update is called once per frame
 	void Update () {
-		//display the student's letter onto the screen
-		student_letter.text = display_Letter;
-       
-
         //Never-ending Sequence of growing and shrinking. For blooming.
         if (growing)
         {
