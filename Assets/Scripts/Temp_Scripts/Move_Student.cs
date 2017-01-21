@@ -21,6 +21,10 @@ public class Move_Student : MonoBehaviour
     public Direction moveDirection;
     Game_Manager_Aleksei gameManager;
 
+    //Variables for floating the text up
+    private bool floatText = false;
+    private float verticalSpeed = 0.5f;
+
     // Use this for initialization
     void Start()
     {
@@ -42,11 +46,17 @@ public class Move_Student : MonoBehaviour
         //Move the student according to the moveDirection enum.
         if (moveDirection == Direction.Left)
         {
-            transform.position += new Vector3(Student_Speed, 0, 0) * Time.deltaTime;
+            transform.position += new Vector3(-Student_Speed, 0, 0) * Time.deltaTime;
         }
         else if (moveDirection == Direction.Right)
         {
-            transform.position += new Vector3(-Student_Speed, 0, 0) * Time.deltaTime;
+            transform.position += new Vector3(Student_Speed, 0, 0) * Time.deltaTime;
+        }
+
+        if (floatText)
+        {
+            transform.FindChild("LetterPivot").FindChild("Letter").transform.position += new Vector3(0, verticalSpeed, 0) * Time.deltaTime;
+            transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<TextMesh>().color -= new Color(0, 0, 0, 1f) * Time.deltaTime;
         }
 
     }
@@ -78,7 +88,7 @@ public class Move_Student : MonoBehaviour
         //checks which wave area the student has collided with
         if (wave.tag == "Player1")
         {
-            transform.FindChild("Letter").GetComponent<TextMesh>().color = Color.red;
+            transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<TextMesh>().color = Color.red;
             //Debug.Log ("Collided with p1");
             //checks that the right key is being pressed
             if (Input.GetKeyDown(Student_Letter))
@@ -91,7 +101,7 @@ public class Move_Student : MonoBehaviour
         }
         else if (wave.tag == "Player2")
         {
-            transform.FindChild("Letter").GetComponent<TextMesh>().color = Color.blue;
+            transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<TextMesh>().color = Color.blue;
             if (Input.GetKeyDown(Student_Letter))
             {
                 //Debug.Log ("The correct key is getting pressed");
@@ -115,6 +125,7 @@ public class Move_Student : MonoBehaviour
             {
                 //Debug.Log ("The correct key is getting pressed");
                 increase_Score(1, 1);
+                transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<Display_Letter>().ShakeLetter();
             }
         }
         else if (wave.tag == "Player2")
@@ -123,6 +134,7 @@ public class Move_Student : MonoBehaviour
             {
                 //Debug.Log ("The correct key is getting pressed");
                 increase_Score(1, 2);
+                transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<Display_Letter>().ShakeLetter();
             }
         }
         
@@ -141,10 +153,18 @@ public class Move_Student : MonoBehaviour
             if (p1_score > p2_score)
             {
                 Debug.Log("P1 had the highest score of: " + p1_score);
+                gameManager.IncreasePlayerScore(1, 50);
+                transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<Display_Letter>().student_letter.text = "+50";
+                transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<TextMesh>().color = Color.red;
+                FloatText();
             }
             else if (p2_score > p1_score)
             {
                 Debug.Log("P2 had the highest score of: " + p2_score);
+                gameManager.IncreasePlayerScore(2, 50);
+                transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<Display_Letter>().student_letter.text = "+50";
+                transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<TextMesh>().color = Color.blue;
+                FloatText();
             }
             else {
                 //if they get the same number of clicks then nothing happens
@@ -152,7 +172,11 @@ public class Move_Student : MonoBehaviour
             //Debug.Log ("This is the score for P1: " + p1_score);
            
         }
-        transform.FindChild("Letter").GetComponent<TextMesh>().color = Color.black; 
+        else
+        {
+            transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<TextMesh>().color = Color.black;
+        }
+       
     }
 
 	void OnCollisionEnter2D(Collision2D student){
@@ -161,6 +185,11 @@ public class Move_Student : MonoBehaviour
 			Physics2D.IgnoreCollision (student.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>());
 		}
 	}
+
+    void FloatText()
+    {
+        floatText = true;
+    }
 
     void OnDestroy()
     {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Game_Manager_Aleksei : MonoBehaviour {
 
@@ -26,6 +27,11 @@ public class Game_Manager_Aleksei : MonoBehaviour {
     //Coroutine to spawn students
     private IEnumerator coroutine;
     private bool SpawningStudent = true;
+
+    int leftOrRight = 1;
+
+    public Text playerOneScoreText, playerTwoScoreText;
+
 	// Use this for initialization
 
 	public float Time_Left;
@@ -49,6 +55,8 @@ public class Game_Manager_Aleksei : MonoBehaviour {
 			Debug.Log ("No more time left");
 		}
         UpdateClockRotation();
+        playerOneScoreText.text = Player1_Score.ToString();
+        playerTwoScoreText.text = Player2_Score.ToString();
 	}
 
     //Coroutine for spawning students and all relevant operations.
@@ -59,16 +67,19 @@ public class Game_Manager_Aleksei : MonoBehaviour {
             if(ValidLetters.Count > 0)
             {
                 //Pick left or right side to spawn.
-                int leftOrRight = Random.Range(0, 2);
+                leftOrRight = -leftOrRight;
                 Vector3 SpawnPosition;
+                Move_Student.Direction direction;
                 //Set the SpawnPosition to left or right.
-                if (leftOrRight == 0)
+                if (leftOrRight == -1)
                 {
                     SpawnPosition = leftPosition;
+                    direction = Move_Student.Direction.Right;
                 }
                 else
                 {
                     SpawnPosition = rightPosition;
+                    direction = Move_Student.Direction.Left;
                 }
 
                 //Pick one of the valid heights and add to the y of SpawnPosition
@@ -81,7 +92,7 @@ public class Game_Manager_Aleksei : MonoBehaviour {
                 GameObject temp = Instantiate(Students[index], SpawnPosition, Quaternion.identity);
 
                 //Set the move direction on the spawned student to the correct one.
-                temp.GetComponent<Move_Student>().moveDirection = (Move_Student.Direction)leftOrRight;
+                temp.GetComponent<Move_Student>().moveDirection = direction;
                 temp.GetComponent<Move_Student>().Student_Letter = GetRandomLetter();
             }
             yield return new WaitForSeconds(waitTime);
@@ -126,5 +137,17 @@ public class Game_Manager_Aleksei : MonoBehaviour {
     {
         GameObject minuteHand = GameObject.Find("minute_hand");
         minuteHand.transform.rotation = Quaternion.Euler(0, 0, GetRotation());
+    }
+
+    public void IncreasePlayerScore(int player, int scoreValue)
+    {
+        if(player == 1)
+        {
+            Player1_Score += scoreValue;
+        }
+        else if(player == 2)
+        {
+            Player2_Score += scoreValue;
+        }
     }
 }
