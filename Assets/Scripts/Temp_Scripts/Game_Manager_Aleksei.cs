@@ -16,6 +16,7 @@ public class Game_Manager_Aleksei : MonoBehaviour {
     private bool SpawningStudent = true;
 	// Use this for initialization
 	void Start () {
+        InitValidLetters();
         StartCoroutine(SpawnStudent());
     }
 	
@@ -70,4 +71,12 @@ public class Game_Manager_Aleksei : MonoBehaviour {
         ValidLetters.Add(letter);
     }
 
+    void InitValidLetters()
+    {
+        string[] array = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
+        for(int i = 0; i < array.Length; i++)
+        {
+            ValidLetters.Add(array[i]);
+        }
+    }
 }
