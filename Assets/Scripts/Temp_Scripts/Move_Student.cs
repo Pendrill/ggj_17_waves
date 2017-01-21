@@ -75,7 +75,7 @@ public class Move_Student : MonoBehaviour
         //checks which wave area the student has collided with
         if (wave.tag == "Player1")
         {
-            Debug.Log ("Collided with p1");
+            //Debug.Log ("Collided with p1");
             //checks that the right key is being pressed
             if (Input.GetKeyDown(Student_Letter))
             {
