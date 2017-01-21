@@ -75,7 +75,7 @@ public class Move_Student : MonoBehaviour
         //checks which wave area the student has collided with
         if (wave.tag == "Player1")
         {
-            //Debug.Log ("Collided with p1");
+            Debug.Log ("Collided with p1");
             //checks that the right key is being pressed
             if (Input.GetKeyDown(Student_Letter))
             {
@@ -92,7 +92,7 @@ public class Move_Student : MonoBehaviour
                 //Debug.Log ("The correct key is getting pressed");
                 increase_Score(1, 2);
             }
-        }
+		} 
 
     }
     //The same thing is done here but rather then being when the student initially collides with the wave area
@@ -142,5 +142,12 @@ public class Move_Student : MonoBehaviour
             //Debug.Log ("This is the score for P1: " + p1_score);
         }
     }
+
+	void OnCollisionEnter2D(Collision2D student){
+		//if student bumps into an other student then the collisions will be ignored.
+		if (student.gameObject.tag == "student") {
+			Physics2D.IgnoreCollision (student.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+		}
+	}
 
 }
