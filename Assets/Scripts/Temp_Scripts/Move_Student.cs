@@ -78,7 +78,7 @@ public class Move_Student : MonoBehaviour
         //checks which wave area the student has collided with
         if (wave.tag == "Player1")
         {
-            
+            transform.FindChild("Letter").GetComponent<TextMesh>().color = Color.red;
             //Debug.Log ("Collided with p1");
             //checks that the right key is being pressed
             if (Input.GetKeyDown(Student_Letter))
@@ -91,7 +91,7 @@ public class Move_Student : MonoBehaviour
         }
         else if (wave.tag == "Player2")
         {
-            
+            transform.FindChild("Letter").GetComponent<TextMesh>().color = Color.blue;
             if (Input.GetKeyDown(Student_Letter))
             {
                 //Debug.Log ("The correct key is getting pressed");
@@ -125,6 +125,7 @@ public class Move_Student : MonoBehaviour
                 increase_Score(1, 2);
             }
         }
+        
     }
 
     //Once the player exits the wave area
@@ -149,7 +150,9 @@ public class Move_Student : MonoBehaviour
                 //if they get the same number of clicks then nothing happens
             }
             //Debug.Log ("This is the score for P1: " + p1_score);
+           
         }
+        transform.FindChild("Letter").GetComponent<TextMesh>().color = Color.black; 
     }
 
 	void OnCollisionEnter2D(Collision2D student){
