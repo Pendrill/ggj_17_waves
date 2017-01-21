@@ -13,6 +13,9 @@ public class Game_Manager_Aleksei : MonoBehaviour {
     //List of Valid Y Positions.
     //public List<float> ValidYPositions;
 
+    //Time between each student spawn
+    public float waitTime = 2.0f;
+
     //The two x possible spawn positions.
     private Vector3 leftPosition = new Vector3(-10, 0, 0);
     private Vector3 rightPosition = new Vector3(10, 0, 0);
@@ -36,33 +39,35 @@ public class Game_Manager_Aleksei : MonoBehaviour {
     {
         while (SpawningStudent)
         {
-           
-            //Pick left or right side to spawn.
-            int leftOrRight = Random.Range(0, 2);
-            Vector3 SpawnPosition;
-            //Set the SpawnPosition to left or right.
-            if (leftOrRight == 0)
+            if(ValidLetters.Count > 0)
             {
-                SpawnPosition = leftPosition;
+                //Pick left or right side to spawn.
+                int leftOrRight = Random.Range(0, 2);
+                Vector3 SpawnPosition;
+                //Set the SpawnPosition to left or right.
+                if (leftOrRight == 0)
+                {
+                    SpawnPosition = leftPosition;
+                }
+                else
+                {
+                    SpawnPosition = rightPosition;
+                }
+
+                //Pick one of the valid heights and add to the y of SpawnPosition
+                /*int randomYValue = Random.Range(0, ValidYPositions.Count);
+                SpawnPosition.y += ValidYPositions[randomYValue];*/
+                SpawnPosition.y = Random.Range(-4f, 2f);
+
+                //Pick a random student model and spawn at position.
+                int index = Random.Range(0, Students.Count);
+                GameObject temp = Instantiate(Students[index], SpawnPosition, Quaternion.identity);
+
+                //Set the move direction on the spawned student to the correct one.
+                temp.GetComponent<Move_Student>().moveDirection = (Move_Student.Direction)leftOrRight;
+                temp.GetComponent<Move_Student>().Student_Letter = GetRandomLetter();
             }
-            else
-            {
-                SpawnPosition = rightPosition;
-            }
-
-            //Pick one of the valid heights and add to the y of SpawnPosition
-            /*int randomYValue = Random.Range(0, ValidYPositions.Count);
-            SpawnPosition.y += ValidYPositions[randomYValue];*/
-            SpawnPosition.y = Random.Range(-4f, 2f);
-
-            //Pick a random student model and spawn at position.
-            int index = Random.Range(0, Students.Count);
-            GameObject temp = Instantiate(Students[index], SpawnPosition, Quaternion.identity);
-
-            //Set the move direction on the spawned student to the correct one.
-            temp.GetComponent<Move_Student>().moveDirection = (Move_Student.Direction) leftOrRight;
-            temp.GetComponent<Move_Student>().Student_Letter = GetRandomLetter();
-            yield return new WaitForSeconds(2.0f);
+            yield return new WaitForSeconds(waitTime);
         }
        
     }

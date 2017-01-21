@@ -24,6 +24,7 @@ public class Move_Student : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        //Get the gameManager
         gameManager = GameObject.Find("GameManager").GetComponent<Game_Manager_Aleksei>();
         //Set the exit counter to 0 as they have not passed any wave area yet
         Exit_Counter = 0;
@@ -36,6 +37,7 @@ public class Move_Student : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         //Student_RigidBody.AddForce (-transform.right * Student_Speed * Time.deltaTime);
         //Move the student according to the moveDirection enum.
         if (moveDirection == Direction.Left)
@@ -76,6 +78,7 @@ public class Move_Student : MonoBehaviour
         //checks which wave area the student has collided with
         if (wave.tag == "Player1")
         {
+            
             //Debug.Log ("Collided with p1");
             //checks that the right key is being pressed
             if (Input.GetKeyDown(Student_Letter))
@@ -88,15 +91,15 @@ public class Move_Student : MonoBehaviour
         }
         else if (wave.tag == "Player2")
         {
+            
             if (Input.GetKeyDown(Student_Letter))
             {
                 //Debug.Log ("The correct key is getting pressed");
                 increase_Score(1, 2);
             }
-        }
+		} 
         else if (wave.tag == "DeathBox")
         {
-            Debug.Log("Deathbox");
             Destroy(gameObject);
         }
 
@@ -148,6 +151,13 @@ public class Move_Student : MonoBehaviour
             //Debug.Log ("This is the score for P1: " + p1_score);
         }
     }
+
+	void OnCollisionEnter2D(Collision2D student){
+		//if student bumps into an other student then the collisions will be ignored.
+		if (student.gameObject.tag == "student") {
+			Physics2D.IgnoreCollision (student.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+		}
+	}
 
     void OnDestroy()
     {
