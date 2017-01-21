@@ -29,20 +29,26 @@ public class Game_Manager_Aleksei : MonoBehaviour {
 	// Use this for initialization
 
 	public float Time_Left;
+    private float Time_Total;
 
 	void Start () {
         InitValidLetters();
         StartCoroutine(SpawnStudent());
-		Time_Left = 10f;
+        Time_Total = Time_Left;
     }
 	
 	// Update is called once per frame
 	void Update () {
-		Time_Left -= Time.deltaTime;
+        if(Time_Left >= 0)
+        {
+            Time_Left -= Time.deltaTime;
+        }
+		
 		//Debug.Log (Time_Left);
 		if (Time_Left <= 0) {
 			Debug.Log ("No more time left");
 		}
+        UpdateClockRotation();
 	}
 
     //Coroutine for spawning students and all relevant operations.
@@ -106,5 +112,19 @@ public class Game_Manager_Aleksei : MonoBehaviour {
         {
             ValidLetters.Add(array[i]);
         }
+    }
+
+    float GetRotation()
+    {
+        //Calculate the target rotation by getting the percentage of the round completed and multiplying by 360.
+        float TimePercentage = Time_Left / Time_Total;
+        float targetRotation = TimePercentage * 360;
+        return targetRotation;
+    }
+
+    void UpdateClockRotation()
+    {
+        GameObject minuteHand = GameObject.Find("minute_hand");
+        minuteHand.transform.rotation = Quaternion.Euler(0, 0, GetRotation());
     }
 }
