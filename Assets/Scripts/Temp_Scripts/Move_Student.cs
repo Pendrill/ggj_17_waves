@@ -19,10 +19,13 @@ public class Move_Student : MonoBehaviour
     public enum Direction { Left, Right };
     //The movement direction for this particular student.
     public Direction moveDirection;
+    Game_Manager_Aleksei gameManager;
 
     // Use this for initialization
     void Start()
     {
+        //Get the gameManager
+        gameManager = GameObject.Find("GameManager").GetComponent<Game_Manager_Aleksei>();
         //Set the exit counter to 0 as they have not passed any wave area yet
         Exit_Counter = 0;
         //Get the rigid body of the student
@@ -75,6 +78,7 @@ public class Move_Student : MonoBehaviour
         //checks which wave area the student has collided with
         if (wave.tag == "Player1")
         {
+            
             //Debug.Log ("Collided with p1");
             //checks that the right key is being pressed
             if (Input.GetKeyDown(Student_Letter))
@@ -87,12 +91,17 @@ public class Move_Student : MonoBehaviour
         }
         else if (wave.tag == "Player2")
         {
+            
             if (Input.GetKeyDown(Student_Letter))
             {
                 //Debug.Log ("The correct key is getting pressed");
                 increase_Score(1, 2);
             }
 		} 
+        else if (wave.tag == "DeathBox")
+        {
+            Destroy(gameObject);
+        }
 
     }
     //The same thing is done here but rather then being when the student initially collides with the wave area
@@ -149,5 +158,11 @@ public class Move_Student : MonoBehaviour
 			Physics2D.IgnoreCollision (student.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>());
 		}
 	}
+
+    void OnDestroy()
+    {
+        gameManager.ReturnLetter(Student_Letter);
+        Destroy(gameObject);
+    }
 
 }
