@@ -185,6 +185,7 @@ public class Move_Student : MonoBehaviour
             else {
                 //if they get the same number of clicks then nothing happens
                 transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<Display_Letter>().student_letter.text = "\u2639";
+                transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<TextMesh>().fontSize += 10;
                 transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<TextMesh>().color = Color.black;
                 FloatText();
             }
