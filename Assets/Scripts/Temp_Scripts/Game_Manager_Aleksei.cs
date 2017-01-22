@@ -116,10 +116,12 @@ public class Game_Manager_Aleksei : MonoBehaviour {
                 /*int randomYValue = Random.Range(0, ValidYPositions.Count);
                 SpawnPosition.y += ValidYPositions[randomYValue];*/
                 SpawnPosition.y = Random.Range(minY, maxY);
+                //SpawnPosition.y = (SpawnPosition.y - (SpawnPosition.y % 0.4f)) * 0.4f;
+                SpawnPosition.z = SpawnPosition.y;
 
                 //Pick a random student model and spawn at position.
                 int index = Random.Range(0, Students.Count);
-                GameObject temp = Instantiate(Students[index], SpawnPosition, Quaternion.identity);
+                GameObject temp = Instantiate(Students[index], SpawnPosition, Quaternion.Euler(new Vector3(-15, 0, 0)));
 
                 //Set the move direction on the spawned student to the correct one.
                 temp.GetComponent<Move_Student>().moveDirection = direction;
