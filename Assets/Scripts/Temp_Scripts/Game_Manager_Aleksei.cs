@@ -37,10 +37,22 @@ public class Game_Manager_Aleksei : MonoBehaviour {
 	public float Time_Left;
     private float Time_Total;
 
+    public bool freeze = false;
+
+    private int listMax;
+
+    //ScoreCard reveal variables
+    public GameObject ScoreCard;
+    private bool revealingScore = false;
+    private int childIndex = 0;
+    private float revealTimer = 0;
+    public float revealIntervals = 0.2f;
+
 	void Start () {
         InitValidLetters();
         StartCoroutine(SpawnStudent());
         Time_Total = Time_Left;
+        listMax = ValidLetters.Count;
     }
 	
 	// Update is called once per frame
@@ -52,11 +64,29 @@ public class Game_Manager_Aleksei : MonoBehaviour {
 		
 		//Debug.Log (Time_Left);
 		if (Time_Left <= 0) {
-			Debug.Log ("No more time left");
+            freeze = true;
+            SpawningStudent = false;
+            if(ValidLetters.Count == listMax)
+            {
+                RevealScoreCard();
+            }
 		}
         UpdateClockRotation();
         playerOneScoreText.text = Player1_Score.ToString();
         playerTwoScoreText.text = Player2_Score.ToString();
+        if (revealingScore)
+        {
+            if(childIndex < ScoreCard.transform.childCount && revealTimer >= revealIntervals)
+            {
+                ScoreCard.transform.GetChild(childIndex).gameObject.SetActive(true);
+                childIndex++;
+                revealTimer = 0;
+            }
+            else
+            {
+                revealTimer += Time.deltaTime;
+            }
+        }
 	}
 
     //Coroutine for spawning students and all relevant operations.
@@ -137,6 +167,7 @@ public class Game_Manager_Aleksei : MonoBehaviour {
     {
         GameObject minuteHand = GameObject.Find("minute_hand");
         minuteHand.transform.rotation = Quaternion.Euler(0, 0, GetRotation());
+        
     }
 
     public void IncreasePlayerScore(int player, int scoreValue)
@@ -150,4 +181,28 @@ public class Game_Manager_Aleksei : MonoBehaviour {
             Player2_Score += scoreValue;
         }
     }
+
+    //Code to set the ScoreCard string values, and enabled the reveal.
+    void RevealScoreCard()
+    {
+        ScoreCard.SetActive(true);
+        revealingScore = true;
+        ScoreCard.transform.FindChild("Player1Score").GetComponent<TextMesh>().text = Player1_Score.ToString();
+        ScoreCard.transform.FindChild("Player2Score").GetComponent<TextMesh>().text = Player2_Score.ToString();
+
+        //Detect who wins and set the text.
+        if (Player1_Score > Player2_Score)
+        {
+            ScoreCard.transform.FindChild("Winner").GetComponent<TextMesh>().text = "P L A Y E R 1   W I N S";
+        }
+        else if(Player2_Score > Player1_Score)
+        {
+            ScoreCard.transform.FindChild("Winner").GetComponent<TextMesh>().text = "P L A Y E R 2   W I N S";
+        }
+        else
+        {
+            ScoreCard.transform.FindChild("Winner").GetComponent<TextMesh>().text = "Y O U   A L L   L O S E";
+        }
+    }
+
 }
