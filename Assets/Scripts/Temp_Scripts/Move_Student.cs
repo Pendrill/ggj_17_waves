@@ -170,7 +170,7 @@ public class Move_Student : MonoBehaviour
             //if p1 has a higher score then p2 etc...
             if (p1_score > p2_score)
             {
-                Debug.Log("P1 had the highest score of: " + p1_score);
+                //Debug.Log("P1 had the highest score of: " + p1_score);
                 gameManager.IncreasePlayerScore(1, 100);
                 transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<Display_Letter>().student_letter.text = "\u2764";
                 transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<TextMesh>().color = player1Color;
@@ -178,7 +178,7 @@ public class Move_Student : MonoBehaviour
             }
             else if (p2_score > p1_score)
             {
-                Debug.Log("P2 had the highest score of: " + p2_score);
+                //Debug.Log("P2 had the highest score of: " + p2_score);
                 gameManager.IncreasePlayerScore(2, 100);
                 transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<Display_Letter>().student_letter.text = "\u2764";
                 transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<TextMesh>().color = player2Color;
