@@ -25,6 +25,7 @@ public class Move_Student : MonoBehaviour
     private bool floatText = false;
     private float verticalSpeed = 0.5f;
 
+
     // Use this for initialization
     void Start()
     {
@@ -41,7 +42,6 @@ public class Move_Student : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         //Student_RigidBody.AddForce (-transform.right * Student_Speed * Time.deltaTime);
         //Move the student according to the moveDirection enum.
         if (moveDirection == Direction.Left)
@@ -168,6 +168,9 @@ public class Move_Student : MonoBehaviour
             }
             else {
                 //if they get the same number of clicks then nothing happens
+                transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<Display_Letter>().student_letter.text = "0";
+                transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<TextMesh>().color = Color.black;
+                FloatText();
             }
             //Debug.Log ("This is the score for P1: " + p1_score);
            
