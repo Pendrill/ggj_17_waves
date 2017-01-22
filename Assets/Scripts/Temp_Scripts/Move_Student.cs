@@ -169,22 +169,23 @@ public class Move_Student : MonoBehaviour
             if (p1_score > p2_score)
             {
                 Debug.Log("P1 had the highest score of: " + p1_score);
-                gameManager.IncreasePlayerScore(1, 50);
-                transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<Display_Letter>().student_letter.text = "+50";
+                gameManager.IncreasePlayerScore(1, 100);
+                transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<Display_Letter>().student_letter.text = "\u2764";
                 transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<TextMesh>().color = Color.red;
                 FloatText();
             }
             else if (p2_score > p1_score)
             {
                 Debug.Log("P2 had the highest score of: " + p2_score);
-                gameManager.IncreasePlayerScore(2, 50);
-                transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<Display_Letter>().student_letter.text = "+50";
+                gameManager.IncreasePlayerScore(2, 100);
+                transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<Display_Letter>().student_letter.text = "\u2764";
                 transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<TextMesh>().color = Color.blue;
                 FloatText();
             }
             else {
                 //if they get the same number of clicks then nothing happens
-                transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<Display_Letter>().student_letter.text = "0";
+                transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<Display_Letter>().student_letter.text = "\u2639";
+                transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<TextMesh>().fontSize += 10;
                 transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<TextMesh>().color = Color.black;
                 FloatText();
             }
