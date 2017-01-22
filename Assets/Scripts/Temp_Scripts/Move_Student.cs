@@ -30,6 +30,8 @@ public class Move_Student : MonoBehaviour
 	public Animator p1Animator, p2Animator;
 	public GameObject p1, p2;
 
+    public Color player1Color, player2Color;
+
     // Use this for initialization
     void Start()
     {
@@ -100,7 +102,7 @@ public class Move_Student : MonoBehaviour
         //checks which wave area the student has collided with
         if (wave.tag == "Player1")
         {
-            transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<TextMesh>().color = Color.red;
+            transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<TextMesh>().color = player1Color;
             //Debug.Log ("Collided with p1");
             //checks that the right key is being pressed
             if (Input.GetKeyDown(Student_Letter))
@@ -114,7 +116,7 @@ public class Move_Student : MonoBehaviour
         }
         else if (wave.tag == "Player2")
         {
-            transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<TextMesh>().color = Color.blue;
+            transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<TextMesh>().color = player2Color;
             if (Input.GetKeyDown(Student_Letter))
             {
 				p2Animator.SetTrigger ("P2Wave");
@@ -171,7 +173,7 @@ public class Move_Student : MonoBehaviour
                 Debug.Log("P1 had the highest score of: " + p1_score);
                 gameManager.IncreasePlayerScore(1, 100);
                 transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<Display_Letter>().student_letter.text = "\u2764";
-                transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<TextMesh>().color = Color.red;
+                transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<TextMesh>().color = player1Color;
                 FloatText();
             }
             else if (p2_score > p1_score)
@@ -179,7 +181,7 @@ public class Move_Student : MonoBehaviour
                 Debug.Log("P2 had the highest score of: " + p2_score);
                 gameManager.IncreasePlayerScore(2, 100);
                 transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<Display_Letter>().student_letter.text = "\u2764";
-                transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<TextMesh>().color = Color.blue;
+                transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<TextMesh>().color = player2Color;
                 FloatText();
             }
             else {
