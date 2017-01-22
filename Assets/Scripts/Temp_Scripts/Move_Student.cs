@@ -27,6 +27,8 @@ public class Move_Student : MonoBehaviour
     private bool floatText = false;
     private float verticalSpeed = 0.5f;
 
+	public Animator p1Animator, p2Animator;
+	public GameObject p1, p2;
 
     // Use this for initialization
     void Start()
@@ -39,6 +41,10 @@ public class Move_Student : MonoBehaviour
         Student_RigidBody = GetComponent<Rigidbody2D>();
         //The specific letter associated to the student is being set in the Inspector
         //Student_Letter = "m";
+		p1 = GameObject.FindGameObjectWithTag("p1Mouse");
+		p2 = GameObject.FindGameObjectWithTag ("p2Mouse");
+		p1Animator = p1.GetComponent<Animator> ();
+		p2Animator = p2.GetComponent<Animator> ();
     }
 
     // Update is called once per frame
@@ -99,6 +105,7 @@ public class Move_Student : MonoBehaviour
             //checks that the right key is being pressed
             if (Input.GetKeyDown(Student_Letter))
             {
+				p1Animator.SetTrigger ("P1Wave");
                 //Debug.Log ("The correct key is getting pressed");
                 //we increase the score by one;
                 increase_Score(1, 1);
@@ -110,6 +117,7 @@ public class Move_Student : MonoBehaviour
             transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<TextMesh>().color = Color.blue;
             if (Input.GetKeyDown(Student_Letter))
             {
+				p2Animator.SetTrigger ("P2Wave");
                 //Debug.Log ("The correct key is getting pressed");
                 increase_Score(1, 2);
             }
@@ -129,6 +137,7 @@ public class Move_Student : MonoBehaviour
             //Debug.Log ("Collided with p1");
             if (Input.GetKeyDown(Student_Letter))
             {
+				p1Animator.SetTrigger ("P1Wave");
                 //Debug.Log ("The correct key is getting pressed");
                 increase_Score(1, 1);
                 transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<Display_Letter>().ShakeLetter();
@@ -138,6 +147,7 @@ public class Move_Student : MonoBehaviour
         {
             if (Input.GetKeyDown(Student_Letter))
             {
+				p2Animator.SetTrigger ("P2Wave");
                 //Debug.Log ("The correct key is getting pressed");
                 increase_Score(1, 2);
                 transform.FindChild("LetterPivot").FindChild("Letter").GetComponent<Display_Letter>().ShakeLetter();
