@@ -116,6 +116,7 @@ public class Game_Manager_Aleksei : MonoBehaviour {
                 /*int randomYValue = Random.Range(0, ValidYPositions.Count);
                 SpawnPosition.y += ValidYPositions[randomYValue];*/
                 SpawnPosition.y = Random.Range(minY, maxY);
+                SpawnPosition.z = SpawnPosition.y;
 
                 //Pick a random student model and spawn at position.
                 int index = Random.Range(0, Students.Count);

@@ -191,8 +191,16 @@ public class Move_Student : MonoBehaviour
 	void OnCollisionEnter2D(Collision2D student){
 		//if student bumps into an other student then the collisions will be ignored.
 		if (student.gameObject.tag == "student") {
-			Physics2D.IgnoreCollision (student.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>());
-		}
+            Physics2D.IgnoreCollision(student.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+            /*
+            else
+            {
+                Debug.Log("alt fixing " + transform.name + " and " + student.gameObject.name);
+                sprite.sortingOrder = 1;
+                otherSprite.sortingOrder = 0;
+            }*/
+
+        }
 	}
 
     void FloatText()
