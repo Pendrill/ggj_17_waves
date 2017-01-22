@@ -20,6 +20,8 @@ public class Move_Student : MonoBehaviour
     //The movement direction for this particular student.
     public Direction moveDirection;
     Game_Manager_Aleksei gameManager;
+	public GameObject mouse;
+	public GameObject letterPivot;
 
     //Variables for floating the text up
     private bool floatText = false;
@@ -50,6 +52,10 @@ public class Move_Student : MonoBehaviour
         }
         else if (moveDirection == Direction.Right)
         {
+			if (!mouse.GetComponent<SpriteRenderer> ().flipX) {
+				mouse.GetComponent<SpriteRenderer> ().flipX = true;
+				letterPivot.transform.position += new Vector3(0.20f, 0, 0);
+			}
             transform.position += new Vector3(Student_Speed, 0, 0) * Time.deltaTime;
         }
 
