@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Menu_Navigation : MonoBehaviour {
 	public bool Start_Screen;
+	//public bool Game_Scene;
 	// Use this for initialization
 	void Start () {
 		

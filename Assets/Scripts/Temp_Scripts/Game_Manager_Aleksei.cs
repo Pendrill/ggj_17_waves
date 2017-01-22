@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Game_Manager_Aleksei : MonoBehaviour {
 
@@ -48,11 +49,14 @@ public class Game_Manager_Aleksei : MonoBehaviour {
     private float revealTimer = 0;
     public float revealIntervals = 0.2f;
 
+	public bool restart;
+
 	void Start () {
         InitValidLetters();
         StartCoroutine(SpawnStudent());
         Time_Total = Time_Left;
         listMax = ValidLetters.Count;
+		restart = false;
     }
 	
 	// Update is called once per frame
@@ -87,6 +91,12 @@ public class Game_Manager_Aleksei : MonoBehaviour {
                 revealTimer += Time.deltaTime;
             }
         }
+		if (restart) {
+			if (Input.GetKeyDown (KeyCode.R)) {
+				restart = false;
+				SceneManager.LoadScene ("Start_Menu");
+			}
+		}
 	}
 
     //Coroutine for spawning students and all relevant operations.
@@ -187,6 +197,7 @@ public class Game_Manager_Aleksei : MonoBehaviour {
     //Code to set the ScoreCard string values, and enabled the reveal.
     void RevealScoreCard()
     {
+		restart = true;
         ScoreCard.SetActive(true);
         revealingScore = true;
         ScoreCard.transform.FindChild("Player1Score").GetComponent<TextMesh>().text = Player1_Score.ToString();
